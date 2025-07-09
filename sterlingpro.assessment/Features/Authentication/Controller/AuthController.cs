@@ -1,18 +1,44 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using sterlingpro.assessment.Common.Dto;
+using sterlingpro.assessment.Features.Authentication.Login;
+using sterlingpro.assessment.Features.Authentication.Register;
 
-namespace sterlingpro.assessment.Features.Authentication.Register
+namespace sterlingpro.assessment.Features.Authentication.Controller
 {
     [ApiController]
-    [Route("api/auth")]
-    public class RegisterController : ControllerBase
+    [Route("api/[controller]")]
+    public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public RegisterController(IMediator mediator)
+        public AuthController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto loginDto)
+        {
+            try
+            {
+                var command = new LoginCommand
+                {
+                    Email = loginDto.Email,
+                    Password = loginDto.Password
+                };
+
+                var result = await _mediator.Send(command);
+                return Ok(result);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred during login" });
+            }
         }
 
         [HttpPost("register")]
