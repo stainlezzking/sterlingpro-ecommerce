@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using sterlingpro.assessment.Features.Cart.AddToCart;
 using sterlingpro.assessment.Features.Cart.GetCart;
@@ -11,6 +12,7 @@ using sterlingpro.assessment.Features.Products.GetProductsById;
 namespace sterlingpro.assessment.Features.Products.Controller
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {

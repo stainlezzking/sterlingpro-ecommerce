@@ -10,6 +10,7 @@ namespace sterlingpro.assessment.Features.Cart.GetCart
     {
         public int CartId { get; set; }
         public List<CartItemDto> Items { get; set; }
+        public string ProductName { get; set; }
         public decimal TotalAmount { get; set; }
         public int TotalItems { get; set; }
         public DateTime UpdatedAt { get; set; }

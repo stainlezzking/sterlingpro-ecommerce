@@ -17,22 +17,8 @@ namespace sterlingpro.assessment.Features.Products.GetProducts
         public async Task<List<Product>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
         {
             var query = _context.Products.Where(p => p.IsActive);
-
-            if (!string.IsNullOrEmpty(request.Category))
-            {
-                query = query.Where(p => p.Category.ToLower() == request.Category.ToLower());
-            }
-
-            if (!string.IsNullOrEmpty(request.SearchTerm))
-            {
-                query = query.Where(p => p.Name.Contains(request.SearchTerm) ||
-                                        p.Description.Contains(request.SearchTerm));
-            }
-
             return await query
-                .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize)
-                .OrderBy(p => p.Name)
+                .OrderByDescending(p => p.CreatedAt)
                 .ToListAsync(cancellationToken);
         }
     }

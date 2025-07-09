@@ -52,6 +52,7 @@ namespace sterlingpro.assessment.Features.Cart.GetCart
             return new CartResponseDto
             {
                 CartId = cart.Id,
+                
                 Items = cartItems,
                 TotalAmount = cartItems.Sum(item => item.TotalPrice),
                 TotalItems = cartItems.Sum(item => item.Quantity),

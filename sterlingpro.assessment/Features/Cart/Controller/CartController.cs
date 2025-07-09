@@ -5,12 +5,14 @@
     using global::sterlingpro.assessment.Features.Cart.RemoveFromCart;
     using global::sterlingpro.assessment.Features.Cart.UpdateCartItem;
     using MediatR;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
 
     namespace sterlingpro.assessment.Features.Products.Controller
     {
         [ApiController]
+        [Authorize]
         [Route("api/[controller]")]
         public class CartController : ControllerBase
         {
